@@ -55,7 +55,7 @@ const commentSchema = new mongoose.Schema({
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'userModel',
+    ref: 'UserModel',
     required: true,
   },
   date: {
@@ -102,7 +102,7 @@ const recipeSchema = new mongoose.Schema({
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'userModel',
+    ref: 'UserModel',
     required: true,
   },
   ingredients: [ingredientSchema],
