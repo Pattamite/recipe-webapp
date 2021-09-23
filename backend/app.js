@@ -1,6 +1,7 @@
 const config = require('./utils/config');
 const express = require('express');
 const cors = require('cors');
+const usersRouter = require('./controllers/users_router');
 const loginRouter = require('./controllers/login_router');
 const middleware = require('./utils/middleware');
 const logger = require('./utils/logger');
@@ -24,6 +25,7 @@ app.use(middleware.requestLogger);
 app.use(middleware.tokenExtractor);
 app.use(middleware.userIdExtractor);
 app.use('/api/login', loginRouter);
+app.use('/api/users', usersRouter);
 
 if (config.NODE_ENV === 'test') {
   const testingRounter = require('./controllers/testing_router');
