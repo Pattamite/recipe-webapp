@@ -1,5 +1,20 @@
 const mongoose = require('mongoose');
 
+/**
+ * Change key '_id' to 'id' instad
+ * @param {Object} object object with key '_id'
+ * @return {Object} object with key 'id' instead of '_id'
+ */
+function cleanIdOfObject(object) {
+  const newObject = {
+    ...object,
+    id: object._id.toString(),
+  };
+  delete newObject._id;
+
+  return newObject;
+}
+
 const ingredientSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -105,6 +120,10 @@ const recipeSchema = new mongoose.Schema({
     ref: 'UserModel',
     required: true,
   },
+  date: {
+    type: Date,
+    required: true,
+  },
   ingredients: [ingredientSchema],
   steps: [stepSchema],
   comments: [commentSchema],
@@ -115,9 +134,16 @@ recipeSchema.set('toJSON', {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
     delete returnedObject.__v;
+
+    returnedObject.ingredients =
+      returnedObject.ingredients.map(cleanIdOfObject);
+    returnedObject.steps =
+      returnedObject.steps.map(cleanIdOfObject);
+    returnedObject.comments =
+      returnedObject.comments.map(cleanIdOfObject);
   },
 });
 
-const recipeModel = mongoose.model('recipeModel', recipeSchema);
+const RecipeModel = mongoose.model('recipeModel', recipeSchema);
 
-module.exports = recipeModel;
+module.exports = RecipeModel;

@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const usersRouter = require('./controllers/users_router');
 const loginRouter = require('./controllers/login_router');
+const recipesRouter = require('./controllers/recipes_router');
 const middleware = require('./utils/middleware');
 const logger = require('./utils/logger');
 const mongoose = require('mongoose');
@@ -26,6 +27,7 @@ app.use(middleware.tokenExtractor);
 app.use(middleware.userIdExtractor);
 app.use('/api/login', loginRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/recipes', recipesRouter);
 
 if (config.NODE_ENV === 'test') {
   const testingRounter = require('./controllers/testing_router');

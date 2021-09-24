@@ -7,9 +7,7 @@ function info(...params) {
 
 /** Log error to console */
 function error(...params) {
-  if (process.env.NODE_ENV !== 'test') {
-    console.error(...params);
-  }
+  console.error(...params);
 }
 
 const logger = {

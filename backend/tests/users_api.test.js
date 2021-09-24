@@ -208,6 +208,12 @@ describe('When there is initially one user in db', () => {
 
       const usersAtEnd = await helper.getUsersInDb();
       expect(usersAtEnd).toHaveLength(usersAtStart.length + 1);
+
+      const usernameAtEnd =
+        usersAtEnd.map((user) => {
+          return user.username;
+        });
+      expect(usernameAtEnd).toContain(newUsername);
     });
 
     test('creation fails with proper statuscode and ' +
