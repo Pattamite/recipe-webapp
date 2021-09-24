@@ -24,7 +24,7 @@ usersRouter.post('/', async (request, response, next) => {
     const body = request.body;
 
     const passwordHash =
-      await bcrypt.hash(body.passwordHash, config.SALT_ROUND);
+      await bcrypt.hash(body.password, config.SALT_ROUND);
 
     const user = new UserModel({
       username: body.username,
@@ -34,7 +34,7 @@ usersRouter.post('/', async (request, response, next) => {
 
     const savedUser = await user.save();
 
-    response.json(savedUser);
+    response.json(savedUser.toJSON());
   } catch (exception) {
     next(exception);
   }

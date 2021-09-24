@@ -12,25 +12,22 @@ describe('When there is initially one user in db', () => {
   const dummyUsername = helper.dummyUser.username;
   const dummyDisplayName = helper.dummyUser.displayName;
   const dummyPassword = helper.dummyUser.password;
-  let dummyPasswordHashFrontEnd = null;
-  let dummyPasswordHashBackEnd = null;
+  let dummyPasswordHash = null;
 
   let isHashedPassword = false;
 
   beforeEach(async () => {
     await UserModel.deleteMany({});
     if (!isHashedPassword) {
-      dummyPasswordHashFrontEnd =
+      dummyPasswordHash =
         await bcrypt.hash(dummyPassword, config.SALT_ROUND);
-      dummyPasswordHashBackEnd =
-        await bcrypt.hash(dummyPasswordHashFrontEnd, config.SALT_ROUND);
       isHashedPassword = true;
     }
 
     const user = new UserModel({
       username: dummyUsername,
       displayName: dummyDisplayName,
-      passwordHash: dummyPasswordHashBackEnd,
+      passwordHash: dummyPasswordHash,
     });
 
     await user.save();
@@ -39,7 +36,7 @@ describe('When there is initially one user in db', () => {
   test('login succeeds with a correct username and password', async () => {
     const loginInfo = {
       username: dummyUsername,
-      passwordHash: dummyPasswordHashFrontEnd,
+      password: dummyPassword,
     };
 
     const response = await api
@@ -55,7 +52,7 @@ describe('When there is initially one user in db', () => {
   test('login fails with an incorrect password', async () => {
     const loginInfo = {
       username: dummyUsername,
-      passwordHash: dummyPasswordHashFrontEnd + 'lmaoxd',
+      password: dummyPassword + 'lmaoxd',
     };
 
     await api
@@ -67,7 +64,7 @@ describe('When there is initially one user in db', () => {
   test('login fails with an incorrect username', async () => {
     const loginInfo = {
       username: dummyUsername + 'lmaoxd',
-      passwordHash: dummyPasswordHashFrontEnd,
+      password: dummyPassword,
     };
 
     await api

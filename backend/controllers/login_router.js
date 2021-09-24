@@ -12,7 +12,7 @@ loginRouter.post('/', async (request, response, next) => {
     const user = await UserModel.findOne({ username: body.username });
     const passwordCorrect = user === null ?
       false :
-      await bcrypt.compare(body.passwordHash, user.passwordHash);
+      await bcrypt.compare(body.password, user.passwordHash);
 
     if (!(user && passwordCorrect)) {
       return response.status(401).json({
@@ -38,7 +38,7 @@ loginRouter.post('/', async (request, response, next) => {
       .send({
         token: token,
         username: user.username,
-        name: user.name,
+        displayName: user.displayName,
       });
   } catch (exception) {
     next(exception);

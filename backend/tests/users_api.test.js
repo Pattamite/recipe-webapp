@@ -12,35 +12,26 @@ describe('When there is initially one user in db', () => {
   const dummyUsername = helper.dummyUser.username;
   const dummyDisplayName = helper.dummyUser.displayName;
   const dummyPassword = helper.dummyUser.password;
-  let dummyPasswordHashFrontEnd = null;
-  let dummyPasswordHashBackEnd = null;
+  let dummyPasswordHash = null;
 
   const newUsername = 'testUserNameForTestingUserApi';
   const newDisplayName = 'TestUserDisplayNameForTestingUserApi';
   const newPassword = 'testPasswordForTestingUserApi';
-  let newPasswordHashFrontEnd = null;
-  let newPasswordHashBackEnd = null;
 
   let isHashedPassword = false;
 
   beforeEach(async () => {
     await UserModel.deleteMany({});
     if (!isHashedPassword) {
-      dummyPasswordHashFrontEnd =
+      dummyPasswordHash =
         await bcrypt.hash(dummyPassword, config.SALT_ROUND);
-      dummyPasswordHashBackEnd =
-        await bcrypt.hash(dummyPasswordHashFrontEnd, config.SALT_ROUND);
-      newPasswordHashFrontEnd =
-        await bcrypt.hash(newPassword, config.SALT_ROUND);
-      newPasswordHashBackEnd =
-        await bcrypt.hash(newPasswordHashFrontEnd, config.SALT_ROUND);
       isHashedPassword = true;
     }
 
     const user = new UserModel({
       username: dummyUsername,
       displayName: dummyDisplayName,
-      passwordHash: dummyPasswordHashBackEnd,
+      passwordHash: dummyPasswordHash,
     });
 
     await user.save();
@@ -188,7 +179,7 @@ describe('When there is initially one user in db', () => {
       const newUser = {
         username: newUsername,
         displayName: newDisplayName,
-        passwordHash: newPasswordHashBackEnd,
+        password: newPassword,
       };
 
       await api
@@ -223,7 +214,7 @@ describe('When there is initially one user in db', () => {
       const newUser = {
         username: dummyUsername,
         displayName: 'Superuser',
-        passwordHash: 'lmaoxd',
+        password: 'lmaoxd',
       };
 
       await api

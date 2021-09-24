@@ -13,14 +13,12 @@ describe('When there is initially some recipes and 2 users in db', () => {
   const dummyUsername = helper.dummyUser.username;
   const dummyDisplayName = helper.dummyUser.displayName;
   const dummyPassword = helper.dummyUser.password;
-  let dummyPasswordHashFrontEnd = null;
-  let dummyPasswordHashBackEnd = null;
+  let dummyPasswordHash = null;
 
   const newUsername = 'testUserNameForTestingUserApi';
   const newDisplayName = 'TestUserDisplayNameForTestingUserApi';
   const newPassword = 'testPasswordForTestingUserApi';
-  let newPasswordHashFrontEnd = null;
-  let newPasswordHashBackEnd = null;
+  let newPasswordHash = null;
 
   let user1Token = null;
   let user2Token = null;
@@ -32,21 +30,17 @@ describe('When there is initially some recipes and 2 users in db', () => {
   beforeEach(async () => {
     await UserModel.deleteMany({});
     if (!isHashedPassword) {
-      dummyPasswordHashFrontEnd =
+      dummyPasswordHash =
         await bcrypt.hash(dummyPassword, config.SALT_ROUND);
-      dummyPasswordHashBackEnd =
-        await bcrypt.hash(dummyPasswordHashFrontEnd, config.SALT_ROUND);
-      newPasswordHashFrontEnd =
+      newPasswordHash =
         await bcrypt.hash(newPassword, config.SALT_ROUND);
-      newPasswordHashBackEnd =
-        await bcrypt.hash(newPasswordHashFrontEnd, config.SALT_ROUND);
       isHashedPassword = true;
     }
 
     const user1 = new UserModel({
       username: dummyUsername,
       displayName: dummyDisplayName,
-      passwordHash: dummyPasswordHashBackEnd,
+      passwordHash: dummyPasswordHash,
     });
     const savedUser1 = await user1.save();
     user1Id = savedUser1.id;
@@ -55,7 +49,7 @@ describe('When there is initially some recipes and 2 users in db', () => {
     const user2 = new UserModel({
       username: newUsername,
       displayName: newDisplayName,
-      passwordHash: newPasswordHashBackEnd,
+      passwordHash: newPasswordHash,
     });
     const savedUser2 = await user2.save();
     user2Id = savedUser2.id;
