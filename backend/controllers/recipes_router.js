@@ -39,12 +39,14 @@ recipesRouter.get('/', async (request, response, next) => {
         page = pageNumber,
         itemsPerPage = itemsCountPerPage,
         sort = sortOption,
+        populate = 'user',
       );
     } else {
       paginationObject = await helper.getPaginationFromModel(
         model = RecipeModel,
         page = pageNumber,
         itemsPerPage = itemsCountPerPage,
+        populate = 'user',
       );
     }
 

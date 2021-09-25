@@ -6,10 +6,11 @@ const defaultItemPerpage = 1000;
  * @param {Int} page - page number
  * @param {Int} itemsPerpage - item count per page
  * @param {Object} sort - sorting spec
+ * @param {String} populate - populate field
  * @return {Object} pagination object
 */
 async function getPaginationFromModel(
-  model, page, itemsPerpage = 100, sort = { _id: 'asc' }) {
+  model, page, itemsPerpage = 100, sort = { _id: 'asc' }, populate = null) {
   const parsedPage = tryParseInt(page, defaultPageNumber);
   const parsedItemsPerpage = tryParseInt(itemsPerpage, defaultItemPerpage);
   const itemCount = await model.count();
@@ -17,11 +18,22 @@ async function getPaginationFromModel(
   const targetPage = Math.min(Math.max(parsedPage, 1), finalPage);
   const skipCount = (targetPage - 1) * parsedItemsPerpage;
 
-  const itemList = await model
-    .find()
-    .limit(parsedItemsPerpage)
-    .skip(skipCount)
-    .sort(sort);
+  let itemList;
+
+  if (populate) {
+    itemList = await model
+      .find()
+      .limit(parsedItemsPerpage)
+      .skip(skipCount)
+      .sort(sort)
+      .populate(populate);
+  } else {
+    itemList = await model
+      .find()
+      .limit(parsedItemsPerpage)
+      .skip(skipCount)
+      .sort(sort);
+  }
 
   const resultList = itemList.map( (item) => {
     return item.toJSON();

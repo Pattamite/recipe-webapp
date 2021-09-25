@@ -7,10 +7,9 @@ const baseUrl = '/api/recipes';
  * @return {Object} response data
  */
 async function getLastestRecipePagination(pageNumber = 1) {
-  const request = axios.get(`${baseUrl}/lastest=tue&page=${pageNumber}`);
-  return request.then((response) => {
-    return response.data;
-  });
+  const response =
+    await axios.get(`${baseUrl}?lastest=true&page=${pageNumber}`);
+  return response.data;
 }
 
 /**
@@ -19,10 +18,9 @@ async function getLastestRecipePagination(pageNumber = 1) {
  * @return {Object} response data
  */
 async function getPopularRecipePagination(pageNumber = 1) {
-  const request = axios.get(`${baseUrl}/popular=tue&page=${pageNumber}`);
-  return request.then((response) => {
-    return response.data;
-  });
+  const response =
+    await axios.get(`${baseUrl}?popular=true&page=${pageNumber}`);
+  return response.data;
 }
 
 /**

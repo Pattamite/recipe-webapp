@@ -20,13 +20,13 @@ const initialIngredient = {
   name: '',
   quantity: 0,
   unit: '',
-  imagePath: '',
+  imagePath: '/',
 };
 const initialStep = {
   description: '',
   warning: '',
   tip: '',
-  imagePath: '',
+  imagePath: '/',
 };
 
 /**
@@ -49,8 +49,6 @@ function RecipeForm({ handleSubmit, recipe }) {
     recipe ? recipe.ingredients: [{ ...initialIngredient }]);
   const [steps, setSteps] = useState(
     recipe ? recipe.steps: [{ ...initialStep }]);
-  // ingredients
-  // steps
 
   /**
    * Handle submit request
@@ -60,7 +58,7 @@ function RecipeForm({ handleSubmit, recipe }) {
     newSubmitRequest.preventDefault();
     const recipe = {
       name: nameField.value,
-      imagePath: '',
+      imagePath: '/',
       shortDescription: shortDescriptionField.value,
       description: descriptionField.value,
       difficulty: helper.tryParseInt(difficultyField.value, 1),

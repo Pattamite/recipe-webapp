@@ -13,6 +13,7 @@ import NavBar from './components/navbar_component';
 import LoginForm from './components/login_form_component';
 import RegisterForm from './components/register_form_component';
 import NewRecipeForm from './components/new_recipe_form_component';
+import LastestRecipesPage from './components/lastest_recipes_page_component';
 
 /**
  * Main application of webapp.
@@ -50,10 +51,10 @@ function App() {
               <RegisterForm />
           }
         </Route>
-        <Route path='/recipes'>
-          <p>Recipes page</p>
+        <Route path='/lastest-recipe/:page_number'>
+          <LastestRecipesPage />
         </Route>
-        <Route path='/yourrecipes'>
+        <Route path='/your-recipes'>
           {
             userState.user ?
               <div>
@@ -64,7 +65,7 @@ function App() {
               <Redirect to="/login" />
           }
         </Route>
-        <Route path='/newrecipe'>
+        <Route path='/new-recipe'>
           {
             userState.user ?
               <div>

@@ -57,15 +57,15 @@ function NavBar(props) {
             <Link style={padding} to="/">Home</Link>
           </Nav.Link>
           <Nav.Link href="#" as="span">
-            <Link style={padding} to="/recipes">Recipes</Link>
+            <Link style={padding} to="/lastest-recipe/1">Lastest recipes</Link>
           </Nav.Link>
           {userState.user ?
             <>
               <Nav.Link href="#" as="span">
-                <Link style={padding} to="/yourrecipes">Your recipes</Link>
+                <Link style={padding} to="/your-recipes">Your recipes</Link>
               </Nav.Link>
               <Nav.Link href="#" as="span">
-                <Link style={padding} to="/newrecipe">New recipe</Link>
+                <Link style={padding} to="/new-recipe">New recipe</Link>
               </Nav.Link>
               <Nav.Link href="#" as="span">
                 <Link style={padding} to='/' onClick={handleLogout}>
