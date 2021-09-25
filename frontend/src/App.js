@@ -1,23 +1,15 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  Switch, Route, Link, Redirect,
+  Switch, Route, Redirect,
 } from 'react-router-dom';
 
 import {
   initializeUserAndToken,
 } from './reducers/user_reducer';
 
-import {
-  setNotification,
-  notificationTypeError,
-  notificationTypeConfirm,
-} from './reducers/notification_reducer';
-import {
-  setUserAndToken,
-} from './reducers/user_reducer';
-
 import Notification from './components/notification_component';
+import NavBar from './components/navbar_component';
 import LoginForm from './components/login_form_component';
 import RegisterForm from './components/register_form_component';
 
@@ -38,32 +30,11 @@ function App() {
     dispatch(initializeUserAndToken());
   }, []);
 
-  /**
-   * Handle logout request
-   * @return {Boolean} login result
-   */
-  async function handleLogout() {
-    console.log('logout');
-    try {
-      dispatch(setUserAndToken(null, null));
-      setNotification(
-        'Logout success. Goodbye.',
-        notificationTypeConfirm,
-      );
-      return true;
-    } catch (exception) {
-      setNotification(
-        'Logout failed. Please contact developer.',
-        notificationTypeError,
-      );
-      return false;
-    }
-  }
-
   console.log(userState.user);
 
   return (
     <div className='container'>
+      <NavBar />
       <Notification />
       <Switch>
         <Route path='/login'>
@@ -80,19 +51,29 @@ function App() {
               <RegisterForm />
           }
         </Route>
+        <Route path='/recipes'>
+          <p>Recipes page</p>
+        </Route>
+        <Route path='/yourrecipes'>
+          {
+            userState.user ?
+              <div>
+                <p>
+                  {userState.user.displayName.toString()}{'\''}s recipes page.
+                </p>
+              </div>:
+              <Redirect to="/" />
+          }
+        </Route>
         <Route path='/'>
           <h1>Main Page</h1>
           {
             userState.user ?
               <div>
-                <p>Hello {userState.user.displayName.toString()}</p>
-                <br />
-                <Link to='/' onClick={handleLogout}>Logout</Link>
+                <p>Hello, {userState.user.displayName.toString()}.</p>
               </div>:
               <div>
-                <Link to='/login'>Please login</Link>
-                <br />
-                <Link to='/register'>or register</Link>
+                <p>Welcome to recipes website.</p>
               </div>
           }
         </Route>

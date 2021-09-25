@@ -14,9 +14,9 @@ import {
 import usersService from '../services/users_service';
 
 /**
- * Login form component
+ * Register form component
  * @param {Object} props - component arguments
- * @return {JSX} jsx of notification component
+ * @return {JSX} jsx of register form component
  */
 function RegisterForm(props) {
   const history = useHistory();

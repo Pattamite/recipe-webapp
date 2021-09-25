@@ -19,7 +19,7 @@ import loginService from '../services/login_service';
 /**
  * Login form component
  * @param {Object} props - component arguments
- * @return {JSX} jsx of notification component
+ * @return {JSX} jsx of login form component
  */
 function LoginForm(props) {
   const history = useHistory();
