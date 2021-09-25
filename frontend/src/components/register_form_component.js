@@ -61,7 +61,6 @@ function RegisterForm(props) {
       ));
       return true;
     } catch (exception) {
-      console.log(exception);
       dispatch(setNotification(
         'Register failed. Username might already existed.',
         notificationTypeError,
@@ -96,14 +95,13 @@ function RegisterForm(props) {
             value={passwordField.value}
             onChange={passwordField.onChange}
           />
-          <Button
-            variant='primary'
-            type='submit'
-            style={{ marginTop: 5 }}
-          >
-            Register
-          </Button>
         </Form.Group>
+        <Button
+          variant='primary'
+          type='submit'
+        >
+          Register
+        </Button>
       </Form>
     </div>
   );

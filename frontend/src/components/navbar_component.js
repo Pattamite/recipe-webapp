@@ -28,7 +28,6 @@ function NavBar(props) {
    * @return {Boolean} login result
    */
   async function handleLogout() {
-    console.log('logout');
     try {
       dispatch(setUserAndToken(null, null));
       setNotification(
@@ -64,6 +63,9 @@ function NavBar(props) {
             <>
               <Nav.Link href="#" as="span">
                 <Link style={padding} to="/yourrecipes">Your recipes</Link>
+              </Nav.Link>
+              <Nav.Link href="#" as="span">
+                <Link style={padding} to="/newrecipe">New recipe</Link>
               </Nav.Link>
               <Nav.Link href="#" as="span">
                 <Link style={padding} to='/' onClick={handleLogout}>

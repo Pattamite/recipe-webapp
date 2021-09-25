@@ -39,8 +39,6 @@ function LoginForm(props) {
       password: passwordField.value,
     };
     const result = await handleLogin(newLoginRequest);
-    usernameField.setValue('');
-    passwordField.setValue('');
 
     if (result) {
       history.push('/');
@@ -54,7 +52,6 @@ function LoginForm(props) {
    */
   async function handleLogin(newLoginRequest) {
     try {
-      console.log('newLoginRequest', newLoginRequest);
       const user = await loginService.login(newLoginRequest);
       dispatch(setUserAndToken(user, user.token));
       dispatch(setNotification(
@@ -90,14 +87,14 @@ function LoginForm(props) {
             value={passwordField.value}
             onChange={passwordField.onChange}
           />
-          <Button
-            variant='primary'
-            type='submit'
-            style={{ marginTop: 5 }}
-          >
-            Login
-          </Button>
         </Form.Group>
+        <Button
+          variant='primary'
+          type='submit'
+          style={{ marginTop: 5 }}
+        >
+          Login
+        </Button>
       </Form>
     </div>
   );

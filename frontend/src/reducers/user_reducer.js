@@ -66,7 +66,7 @@ export function initializeUserAndToken() {
   return async (dispatch) => {
     const loggedUserJSON =
       window.localStorage.getItem(config.loggedRecipeAppUserKey);
-    console.log('loggedUserJSON', loggedUserJSON);
+
     const user = loggedUserJSON ? JSON.parse(loggedUserJSON) : null;
     const token = user ? user.token : null;
     dispatch({

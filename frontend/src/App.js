@@ -12,6 +12,7 @@ import Notification from './components/notification_component';
 import NavBar from './components/navbar_component';
 import LoginForm from './components/login_form_component';
 import RegisterForm from './components/register_form_component';
+import NewRecipeForm from './components/new_recipe_form_component';
 
 /**
  * Main application of webapp.
@@ -29,8 +30,6 @@ function App() {
   useEffect(() => {
     dispatch(initializeUserAndToken());
   }, []);
-
-  console.log(userState.user);
 
   return (
     <div className='container'>
@@ -62,7 +61,16 @@ function App() {
                   {userState.user.displayName.toString()}{'\''}s recipes page.
                 </p>
               </div>:
-              <Redirect to="/" />
+              <Redirect to="/login" />
+          }
+        </Route>
+        <Route path='/newrecipe'>
+          {
+            userState.user ?
+              <div>
+                <NewRecipeForm />
+              </div>:
+              <Redirect to="/login" />
           }
         </Route>
         <Route path='/'>
