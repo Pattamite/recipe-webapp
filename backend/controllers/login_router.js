@@ -39,6 +39,7 @@ loginRouter.post('/', async (request, response, next) => {
         token: token,
         username: user.username,
         displayName: user.displayName,
+        id: user._id.toString(),
       });
   } catch (exception) {
     next(exception);

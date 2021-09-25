@@ -24,6 +24,17 @@ async function getPopularRecipePagination(pageNumber = 1) {
 }
 
 /**
+ * Get recipe by id
+ * @param {Int} id - recipe id
+ * @return {Object} response data
+ */
+async function getRecipeById(id) {
+  const response =
+    await axios.get(`${baseUrl}/id/${id}`);
+  return response.data;
+}
+
+/**
  * Create new recipe and save to database
  * @param {Object} newRecipe - new recipe
  * @param {String} token - user token
@@ -66,6 +77,7 @@ function generateAuthorizationString(token) {
 const recipesService = {
   getLastestRecipePagination,
   getPopularRecipePagination,
+  getRecipeById,
   create,
   update,
 };

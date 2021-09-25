@@ -26,9 +26,32 @@ function tryParseFloat(string, defaultValue) {
   return parsedValue;
 }
 
+/**
+   * Get difficulty text
+   * @param {Int} difficulty - component arguments
+   * @return {String} difficulty text
+   */
+function getDifficultyText(difficulty) {
+  switch (difficulty) {
+  case 1:
+    return 'Very easy';
+  case 2:
+    return 'Easy';
+  case 3:
+    return 'Medium';
+  case 4:
+    return 'Hard';
+  case 5:
+    return 'Very hard';
+  default:
+    return 'Not specified';
+  }
+}
+
 const helper = {
   tryParseInt,
   tryParseFloat,
+  getDifficultyText,
 };
 
 export default helper;

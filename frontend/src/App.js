@@ -14,6 +14,7 @@ import LoginForm from './components/login_form_component';
 import RegisterForm from './components/register_form_component';
 import NewRecipeForm from './components/new_recipe_form_component';
 import LastestRecipesPage from './components/lastest_recipes_page_component';
+import RecipeViewById from './components/recipe_view_by_id_component';
 
 /**
  * Main application of webapp.
@@ -21,22 +22,25 @@ import LastestRecipesPage from './components/lastest_recipes_page_component';
  */
 function App() {
   const dispatch = useDispatch();
-  // const notificationState = useSelector((state) => {
-  //   return state.notification;
-  // });
   const userState = useSelector((state) => {
     return state.user;
   });
 
-  useEffect(() => {
-    dispatch(initializeUserAndToken());
-  }, []);
+  useEffect(async () => {
+    await dispatch(initializeUserAndToken());
+  }, [dispatch]);
 
   return (
     <div className='container'>
       <NavBar />
       <Notification />
       <Switch>
+        <Route path='/lastest-recipe/:page_number'>
+          <LastestRecipesPage />
+        </Route>
+        <Route path='/recipe/:id'>
+          <RecipeViewById />
+        </Route>
         <Route path='/login'>
           {
             userState.user ?
@@ -50,9 +54,6 @@ function App() {
               <Redirect to="/" /> :
               <RegisterForm />
           }
-        </Route>
-        <Route path='/lastest-recipe/:page_number'>
-          <LastestRecipesPage />
         </Route>
         <Route path='/your-recipes'>
           {
@@ -68,9 +69,7 @@ function App() {
         <Route path='/new-recipe'>
           {
             userState.user ?
-              <div>
-                <NewRecipeForm />
-              </div>:
+              <NewRecipeForm />:
               <Redirect to="/login" />
           }
         </Route>

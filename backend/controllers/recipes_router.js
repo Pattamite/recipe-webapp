@@ -87,7 +87,8 @@ recipesRouter.post('/', async (request, response, next) => {
 
 recipesRouter.get('/id/:id', async (request, response, next) => {
   try {
-    const recipe = await RecipeModel.findById(request.params.id);
+    const recipe =
+      await (await RecipeModel.findById(request.params.id)).populate('user');
     if (recipe) {
       response.json(recipe);
     } else {

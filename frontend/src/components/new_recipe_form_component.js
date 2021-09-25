@@ -1,16 +1,24 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import RecipeForm from './recipe_form_component';
 
 import recipesService from '../services/recipes_service';
 
+import {
+  setNotification,
+  notificationTypeError,
+  notificationTypeConfirm,
+} from '../reducers/notification_reducer';
 /**
  * New recipe form component
  * @param {Object} props - component arguments
  * @return {JSX} jsx of new recipe form component
  */
 function NewRecipeForm(props) {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const userState = useSelector((state) => {
     return state.user;
   });
@@ -21,10 +29,21 @@ function NewRecipeForm(props) {
    * @return {Boolean} register result
    */
   async function handleSubmit(recipe) {
-    console.log('submit request', recipe);
-    const response = recipesService.create(recipe, userState.token);
-    console.log('submit result', response.body);
-    return true;
+    try {
+      await recipesService.create(recipe, userState.token);
+      dispatch(setNotification(
+        `Recipe "${recipe.name}" created!`,
+        notificationTypeConfirm,
+      ));
+      history.push('/');
+      return true;
+    } catch (exception) {
+      dispatch(setNotification(
+        `Failed to create recipe "${recipe.name}". ${exception.toString()}`,
+        notificationTypeError,
+      ));
+      return false;
+    }
   }
 
   return (

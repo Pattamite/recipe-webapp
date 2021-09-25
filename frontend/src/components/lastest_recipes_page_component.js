@@ -17,11 +17,10 @@ function LastestRecipesPage(props) {
   const [prevPageNumber, setPrevPageNumber] = useState(null);
   const [nextPageNumber, setNextPageNumber] = useState(null);
   const [recipes, setRecipes] = useState([]);
-
-  let isLoading = false;
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(async () => {
-    isLoading = true;
+    setIsLoading(true);
 
     const resultPagination =
       await recipesService.getLastestRecipePagination(pageNumber);
@@ -31,14 +30,14 @@ function LastestRecipesPage(props) {
     setNextPageNumber(pagination.pageNext);
     setRecipes(resultList);
 
-    isLoading = false;
+    setIsLoading(false);
   }, [pageNumber]);
 
   return (
     <div>
       <h1>Lastest Recipes</h1>
       {isLoading ?
-        <h3>Loading...</h3> :
+        <p>Loading...</p> :
         <div>
           <RecipeList recipes={recipes} />
           <Row>
