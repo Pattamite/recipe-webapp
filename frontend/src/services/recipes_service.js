@@ -66,6 +66,21 @@ async function update(id, recipe, token) {
 }
 
 /**
+ * Delete recipe from database
+ * @param {String} id - recipe id
+ * @param {String} token - user token
+ * @return {Object} response data
+ */
+async function remove(id, token) {
+  const config = {
+    headers: { Authorization: generateAuthorizationString(token) },
+  };
+
+  const response = await axios.delete(`${baseUrl}/id/${id}`, config);
+  return response.data;
+}
+
+/**
  * Generate autorization string from token
  * @param {String} token - user token
  * @return {String} autorization string
@@ -80,6 +95,7 @@ const recipesService = {
   getRecipeById,
   create,
   update,
+  remove,
 };
 
 export default recipesService;

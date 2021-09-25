@@ -13,6 +13,7 @@ import NavBar from './components/navbar_component';
 import LoginForm from './components/login_form_component';
 import RegisterForm from './components/register_form_component';
 import NewRecipeForm from './components/new_recipe_form_component';
+import EditRecipeForm from './components/edit_recipe_form_component';
 import LastestRecipesPage from './components/lastest_recipes_page_component';
 import RecipeViewById from './components/recipe_view_by_id_component';
 
@@ -40,6 +41,9 @@ function App() {
         </Route>
         <Route path='/recipe/:id'>
           <RecipeViewById />
+        </Route>
+        <Route path='/edit-recipe/:id'>
+          <EditRecipeForm />
         </Route>
         <Route path='/login'>
           {
