@@ -62,9 +62,6 @@ function NavBar(props) {
           {userState.user ?
             <>
               <Nav.Link href="#" as="span">
-                <Link style={padding} to="/your-recipes">Your recipes</Link>
-              </Nav.Link>
-              <Nav.Link href="#" as="span">
                 <Link style={padding} to="/new-recipe">New recipe</Link>
               </Nav.Link>
               <Nav.Link href="#" as="span">
